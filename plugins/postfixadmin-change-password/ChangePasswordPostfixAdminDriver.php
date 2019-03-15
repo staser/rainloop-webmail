@@ -2,6 +2,11 @@
 
 class ChangePasswordPostfixAdminDriver implements \RainLoop\Providers\ChangePassword\ChangePasswordInterface
 {
+  /**
+	* @var string
+	*/
+	private $sEngine = 'MySQL';
+
 	/**
 	 * @var string
 	 */
@@ -56,6 +61,17 @@ class ChangePasswordPostfixAdminDriver implements \RainLoop\Providers\ChangePass
 	 * @var \MailSo\Log\Logger
 	 */
 	private $oLogger = null;
+
+	/**
+	 * @param string $sEngine
+	 *
+	 * @return \ChangePasswordPostfixAdminDriver
+	 */
+	 public function SetEngine($sEngine)
+	 {
+		 $this->sEngine = $sEngine;
+		 return $this;
+	 }
 
 	/**
 	 * @param string $sHost
@@ -215,7 +231,19 @@ class ChangePasswordPostfixAdminDriver implements \RainLoop\Providers\ChangePass
 		{
 			try
 			{
-				$sDsn = 'mysql:host='.$this->sHost.';port='.$this->iPort.';dbname='.$this->sDatabase;
+				$sDsn = '';
+				switch($this->sEngine){
+					case 'MySQL':
+				  		$sDsn = 'mysql:host='.$this->sHost.';port='.$this->iPort.';dbname='.$this->sDatabase;
+						break;
+				  	case 'PostgreSQL':
+				 		$sDsn = 'pgsql:host='.$this->sHost.';port='.$this->iPort.';dbname='.$this->sDatabase;
+						break;
+				  	default:
+				    		$sDsn = 'mysql:host='.$this->sHost.';port='.$this->iPort.';dbname='.$this->sDatabase;
+					  	break;
+				}
+
 
 				$oPdo = new \PDO($sDsn, $this->sUser, $this->sPassword);
 				$oPdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -259,37 +287,38 @@ class ChangePasswordPostfixAdminDriver implements \RainLoop\Providers\ChangePass
 	{
 		$sResult = '';
 		$sSalt = substr(str_shuffle('./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), 0, 16);
-		switch ($this->sEncrypt)
+		switch (strtolower($this->sEncrypt))
 		{
 			default:
 			case 'plain':
 			case 'cleartext':
-				$sResult = $sPassword;
+				$sResult = '{PLAIN}' . $sPassword;
 				break;
 
 			case 'md5crypt':
 				include_once __DIR__.'/md5crypt.php';
-				$sResult = md5crypt($sPassword);
+				$sResult = '{MD5-CRYPT}' . md5crypt($sPassword);
 				break;
 
 			case 'md5':
-				$sResult = md5($sPassword);
+				$sResult = '{PLAIN-MD5}' . md5($sPassword);
 				break;
 
 			case 'system':
-				$sResult = crypt($sPassword);
+				$sResult = '{CRYPT}' . crypt($sPassword);
 				break;
 
-			case 'SHA256-CRYPT':
+			case 'sha256-crypt':
 				$sResult = '{SHA256-CRYPT}' . crypt($sPassword,'$5$'.$sSalt);
 				break;
 
-			case 'SHA512-CRYPT':
+			case 'sha512-crypt':
 				$sResult = '{SHA512-CRYPT}' . crypt($sPassword,'$6$'.$sSalt);
 				break;
 
 			case 'mysql_encrypt':
-				$oStmt = $oPdo->prepare('SELECT ENCRYPT(?) AS encpass');
+			  if($this->sEngine == 'MySQL'){
+			  	$oStmt = $oPdo->prepare('SELECT ENCRYPT(?) AS encpass');
 				if ($oStmt->execute(array($sPassword)))
 				{
 					$aFetchResult = $oStmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -298,7 +327,10 @@ class ChangePasswordPostfixAdminDriver implements \RainLoop\Providers\ChangePass
 						$sResult = $aFetchResult[0]['encpass'];
 					}
 				}
-				break;
+			}else{
+				throw new \RainLoop\Exceptions\ClientException(\RainLoop\Notifications::CouldNotSaveNewPassword);
+			}
+			break;
 		}
 
 		return $sResult;

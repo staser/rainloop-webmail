@@ -79,6 +79,14 @@ class ServiceActions
 	}
 
 	/**
+	 * @return \RainLoop\Providers\Settings
+	 */
+	public function SettingsProvider()
+	{
+		return $this->oActions->SettingsProvider();
+	}
+
+	/**
 	 * @param array $aPaths
 	 *
 	 * @return \RainLoop\ServiceActions
@@ -489,6 +497,8 @@ class ServiceActions
 				$sMethodName = 'Raw'.$sAction;
 				if (\method_exists($this->oActions, $sMethodName))
 				{
+					@\header('X-Raw-Action: '.$sMethodName, true);
+
 					$sRawError = '';
 					$this->oActions->SetActionParams(array(
 						'RawKey' => empty($this->aPaths[3]) ? '' : $this->aPaths[3],
@@ -721,7 +731,7 @@ class ServiceActions
 					include_once APP_VERSION_ROOT_PATH.'app/libraries/lessphp/ctype.php';
 					include_once APP_VERSION_ROOT_PATH.'app/libraries/lessphp/lessc.inc.php';
 
-					$oLess = new \lessc();
+					$oLess = new \RainLoopVendor\lessc();
 					$oLess->setFormatter('compressed');
 
 					$aResult = array();
@@ -803,17 +813,37 @@ class ServiceActions
 	/**
 	 * @return string
 	 */
-	public function ServiceAppData()
+	public function ServiceAppData($sAdd = '')
 	{
-		return $this->localAppData(false);
+		return $this->localAppData(false, $sAdd);
 	}
 
 	/**
 	 * @return string
 	 */
-	public function ServiceAdminAppData()
+	public function ServiceAdminAppData($sAdd = '')
 	{
-		return $this->localAppData(true);
+		return $this->localAppData(true, $sAdd);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function ServiceMobileVersion()
+	{
+		\RainLoop\Utils::SetCookie(\RainLoop\Actions::RL_MOBILE_TYPE, 'mobile');
+		$this->oActions->Location('./');
+		return '';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function ServiceDesktopVersion()
+	{
+		\RainLoop\Utils::SetCookie(\RainLoop\Actions::RL_MOBILE_TYPE, 'desktop');
+		$this->oActions->Location('./');
+		return '';
 	}
 
 	/**
@@ -845,7 +875,7 @@ class ServiceActions
 			'{{BaseWebStaticPath}}' => \RainLoop\Utils::WebStaticPath(),
 			'{{ErrorTitle}}' => $sTitle,
 			'{{ErrorHeader}}' => $sTitle,
-			'{{ErrorDesc}}' => $sDesc.':'
+			'{{ErrorDesc}}' => $sDesc
 		));
 	}
 
@@ -1125,16 +1155,13 @@ class ServiceActions
 		return $sResult;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function ServiceChange()
+	private function changeAction()
 	{
 		$this->oHttp->ServerNoCache();
 
 		$oAccount = $this->oActions->GetAccount();
 
-		if ($oAccount && $this->oActions->GetCapa(false, \RainLoop\Enumerations\Capa::ADDITIONAL_ACCOUNTS, $oAccount))
+		if ($oAccount && $this->oActions->GetCapa(false, false, \RainLoop\Enumerations\Capa::ADDITIONAL_ACCOUNTS, $oAccount))
 		{
 			$oAccountToLogin = null;
 			$sEmail = empty($this->aPaths[2]) ? '' : \urldecode(\trim($this->aPaths[2]));
@@ -1154,7 +1181,14 @@ class ServiceActions
 				$this->oActions->AuthToken($oAccountToLogin);
 			}
 		}
+	}
 
+	/**
+	 * @return string
+	 */
+	public function ServiceChange()
+	{
+		$this->changeAction();
 		$this->oActions->Location('./');
 		return '';
 	}
@@ -1192,10 +1226,11 @@ class ServiceActions
 
 	/**
 	 * @param bool $bAdmin = true
+	 * @param string $sAdd = ''
 	 *
 	 * @return string
 	 */
-	private function localAppData($bAdmin = false)
+	private function localAppData($bAdmin = false, $sAdd = '')
 	{
 		@\header('Content-Type: application/javascript; charset=utf-8');
 		$this->oHttp->ServerNoCache();
@@ -1233,7 +1268,9 @@ class ServiceActions
 			$this->oActions->SetSpecAuthToken($sAuthAccountHash);
 		}
 
-		$sResult = $this->compileAppData($this->oActions->AppData($bAdmin, $sAuthAccountHash), false);
+		$sResult = $this->compileAppData($this->oActions->AppData($bAdmin,
+			0 === \strpos($sAdd, 'mobile'), '1' === \substr($sAdd, -1),
+			$sAuthAccountHash), false);
 
 		$this->Logger()->Write($sResult, \MailSo\Log\Enumerations\Type::INFO, 'APPDATA');
 
@@ -1277,7 +1314,7 @@ class ServiceActions
 	private function convertLanguageNameToMomentLanguageName($sLanguage)
 	{
 		$aHelper = array('en_gb' => 'en-gb', 'fr_ca' => 'fr-ca', 'pt_br' => 'pt-br',
-			'uk_ua' => 'ua', 'zh_cn' => 'zh-cn', 'zh_tw' => 'zh-tw');
+			'uk_ua' => 'ua', 'zh_cn' => 'zh-cn', 'zh_tw' => 'zh-tw', 'fa_ir' => 'fa');
 
 		return isset($aHelper[$sLanguage]) ? $aHelper[$sLanguage] : \substr($sLanguage, 0, 2);
 	}
@@ -1293,7 +1330,7 @@ class ServiceActions
 	{
 		$aResultLang = array();
 
-		$sMoment = 'window.moment && window.moment.lang && window.moment.lang(\'en\');';
+		$sMoment = 'window.moment && window.moment.locale && window.moment.locale(\'en\');';
 		$sMomentFileName = APP_VERSION_ROOT_PATH.'app/localization/moment/'.
 			$this->convertLanguageNameToMomentLanguageName($sLanguage).'.js';
 
@@ -1316,6 +1353,10 @@ class ServiceActions
 		foreach ($aLangKeys as $sKey)
 		{
 			$sString = isset($aResultLang[$sKey]) ? $aResultLang[$sKey] : $sKey;
+			if (\is_array($sString))
+			{
+				$sString = \implode("\n", $sString);
+			}
 
 			$sLangJs .= '"'.\str_replace('"', '\\"', \str_replace('\\', '\\\\', $sKey)).'":'
 				.'"'.\str_replace(array("\r", "\n", "\t"), array('\r', '\n', '\t'),
@@ -1340,9 +1381,8 @@ class ServiceActions
 	private function compileAppData($aAppData, $bWrapByScriptTag = true)
 	{
 		return
-			($bWrapByScriptTag ? '<script data-cfasync="false">' : '').
-			'window.rainloopAppData='.\json_encode($aAppData).';'.
-			'if(window.__rlah_set){__rlah_set()};'.
+			($bWrapByScriptTag ? '<script type="text/javascript" data-cfasync="false">' : '').
+			'if(window.__initAppData){window.__initAppData('.\json_encode($aAppData).');}'.
 			($bWrapByScriptTag ? '</script>' : '')
 		;
 	}

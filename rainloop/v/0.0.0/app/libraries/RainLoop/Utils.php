@@ -397,7 +397,7 @@ class Utils
 			$isYml = '.yml' === substr($sFileName, -4);
 			if ($isYml)
 			{
-				$aLang = \spyc_load(\str_replace(array(': >-', ': |-'), array(': >', ': |'), \file_get_contents($sFileName)));
+				$aLang = \spyc_load(\str_replace(array(': >-', ': |-', ': |+'), array(': >', ': |', ': |'), \file_get_contents($sFileName)));
 				if (\is_array($aLang))
 				{
 					\reset($aLang);
@@ -475,12 +475,13 @@ class Utils
 	public static function ClearHtmlOutput($sHtml)
 	{
 //		return $sHtml;
-		return \str_replace('> <', '><',
+		return \trim(\str_replace('> <', '><',
+			\str_replace('" />', '"/>',
 			\preg_replace('/[\s]+&nbsp;/i', '&nbsp;',
 			\preg_replace('/&nbsp;[\s]+/i', '&nbsp;',
 			\preg_replace('/[\r\n\t]+/', ' ',
 			$sHtml
-		))));
+		))))));
 	}
 
 	/**

@@ -23,9 +23,10 @@ fr_FR:
     LABEL_LANGUAGE: "Langue"
     LABEL_LANGUAGE_ADMIN: "Langue (admin)"
     LABEL_THEME: "Thème"
-    LABEL_ALLOW_LANGUAGES_ON_SETTINGS: "Permettre la sélection de la langue dans le panneau de configuration"
-    LABEL_ALLOW_THEMES_ON_SETTINGS: "Permettre la sélection du thème dans le panneau de configuration"
-    LABEL_ALLOW_BACKGROUND_ON_SETTINGS: "Permettre la sélection de l'arrière-plan dans le panneau de configuration"
+    LABEL_ALLOW_LANGUAGES_ON_SETTINGS: "Permettre la sélection de la langue dans les paramètres"
+    LABEL_ALLOW_THEMES_ON_SETTINGS: "Permettre la sélection du thème dans les paramètres"
+    LABEL_ALLOW_BACKGROUND_ON_SETTINGS: "Permettre la sélection de l'arrière-plan dans les paramètres"
+    LABEL_NEW_FOLDER_MOVE: "Nouveau bouton \"déplacer vers le dossier\""
     LABEL_SHOW_THUMBNAILS: "Montrer les miniatures (pièces jointes)"
     LABEL_ALLOW_GRAVATAR: "Autoriser Gravatar"
     LEGEND_MAIN: "Principal"
@@ -35,11 +36,11 @@ fr_FR:
     LABEL_ALLOW_TEMPLATES: "Autoriser les modèles"
     ALERT_WARNING: "ATTENTION !"
     HTML_ALERT_WEAK_PASSWORD: |
-      Vous utilisez le mot de passe administrateur par défaut.
-      <br />
-      Pour des raisons de sécurité, veuillez
-      <strong><a href="#/security">choisir un nouveau mot de passe </a></strong>
-      now.
+        Vous utilisez le mot de passe administrateur par défaut.
+        <br />
+        Pour des raisons de sécurité, veuillez
+        <strong><a href="#/security">changer le mot de passe </a></strong>
+        dès maintenant.
   TAB_LOGIN:
     LEGEND_LOGIN_SCREEN: "Ecran de connexion"
     LABEL_DEFAULT_DOMAIN: "Domaine par défaut"
@@ -51,10 +52,10 @@ fr_FR:
     LABEL_PAGE_TITLE: "Titre de la page"
     LABEL_LOADING_DESCRIPTION: "Description pendant le chargement"
     LABEL_FAVICON_URL: "Favicon"
-    LEGEND_LOGIN: "Identifiant"
+    LEGEND_LOGIN: "Connexion"
     LABEL_LOGIN_LOGO: "Logo"
     LABEL_LOGIN_DESCRIPTION: "Description"
-    LABEL_LOGIN_BACKGROUND: "Image de fond"
+    LABEL_LOGIN_BACKGROUND: "Arrière-plan"
     LABEL_LOGIN_CUSTOM_CSS: "CSS personnalisés"
     LABEL_LOGIN_SHOW_POWERED_LINK: "Afficher le lien \"Powered by RainLoop\""
     LEGEND_USER: "Utilisateur"
@@ -67,14 +68,14 @@ fr_FR:
     LABEL_WELCOME_PAGE_URL: "URL"
     LABEL_WELCOME_PAGE_DISPLAY: "Affichage"
     OPTION_WELCOME_PAGE_DISPLAY_NONE: "Aucun"
-    OPTION_WELCOME_PAGE_DISPLAY_ONCE: "Une seul fois"
+    OPTION_WELCOME_PAGE_DISPLAY_ONCE: "Une seule fois"
     OPTION_WELCOME_PAGE_DISPLAY_ALWAYS: "Toujours"
     HTML_ALERT_PREMIUM: "Cette fonctionnalité est réservé aux utilisateurs <strong><a href=\"#/licensing\">Premium</a></strong>."
   TAB_CONTACTS:
     LEGEND_CONTACTS: "Contacts"
     LEGEND_STORAGE: "Stockage (PDO)"
-    LABEL_ENABLE_CONTACTS: "Autoriser les contacts"
-    LABEL_ALLOW_SYNC: "Autoriser la synchronisation des contacts (avec un server CardDAV externe)"
+    LABEL_ENABLE_CONTACTS: "Activer les contacts"
+    LABEL_ALLOW_SYNC: "Autoriser la synchronisation des contacts (avec un serveur CardDAV externe)"
     LABEL_STORAGE_TYPE: "Type"
     LABEL_STORAGE_DSN: "Dsn"
     LABEL_STORAGE_USER: "Utilisateur"
@@ -83,17 +84,18 @@ fr_FR:
     ALERT_NOTICE: "Avis !"
     HTML_ALERT_DO_NOT_USE_THIS_DATABASE: "N'utilisez pas ce type de base de données avec un grand nombre d'utilisateurs actifs."
     HTML_ALERT_DOES_NOT_SUPPORTED: |
-      Votre système ne supporte pas les contacts.
-      <br />
-      Vous devez installer ou autoriser l'extension <strong>PDO (SQLite / MySQL / PostgreSQL)</strong> sur votre serveur.
+        Votre système ne supporte pas les contacts.
+        <br />
+        Vous devez installer ou autoriser l'extension <strong>PDO (SQLite / MySQL / PostgreSQL)</strong> sur votre serveur.
   TAB_DOMAINS:
     LEGEND_DOMAINS: "Domaines"
     BUTTON_ADD_DOMAIN: "Ajouter un domaine"
+    BUTTON_ADD_ALIAS: "Ajouter un alias"
     DELETE_ARE_YOU_SURE: "Êtes-vous sûr ?"
     HTML_DOMAINS_HELPER: |
-      Liste des domaines autorisés.
-      <br />
-      Cliquez sur le nom pour configurer le domaine.
+        Liste des domaines autorisés.
+        <br />
+        Cliquez sur le nom pour configurer le domaine.
   TAB_SECURITY:
     LEGEND_SECURITY: "Sécurité"
     LABEL_ALLOW_TWO_STEP: "Autoriser l'authentification en deux étapes"
@@ -126,11 +128,11 @@ fr_FR:
     LABEL_FACEBOOK_APP_SECRET: "App Secret"
     LEGEND_TWITTER: "Twitter"
     LABEL_ENABLE_TWITTER: "Activer l'intégration Twitter (Autorisation)"
-    LABEL_TWITTER_CONSUMER_KEY: "Consumer Key"
-    LABEL_TWITTER_CONSUMER_SECRET: "Consumer Secret"
+    LABEL_TWITTER_CONSUMER_KEY: "Clé client"
+    LABEL_TWITTER_CONSUMER_SECRET: "Secret client"
     LEGEND_DROPBOX: "Dropbox"
     LABEL_ENABLE_DROPBOX: "Activer l'intégration Dropbox"
-    LABEL_DROPBOX_API_KEY: "Api Key"
+    LABEL_DROPBOX_API_KEY: "Clé API"
     TOP_ALERT: "Les informations détaillées sur l'intégration des réseaux sociaux se trouve à"
   TAB_PLUGINS:
     LEGEND_PLUGINS: "Plugins"
@@ -152,13 +154,12 @@ fr_FR:
     HTML_ALERT_TOP_1: "La licence RainLoop Webmail appartient à"
     HTML_ALERT_TOP_2: "Vous êtes <b>libre</b> de l'utiliser pour vos projets <b>personnels</b>"
     HTML_ALERT_TOP_3: |
-      L'usage commercial (avec des fonctionnalités supplémentaires) de <b>RainLoop Webmail</b> nécessite une
-      <a href="http://www.rainloop.net/purchase/" target="_blank">souscription</a>.
+        L'usage commercial (avec des fonctionnalités supplémentaires) de <b>RainLoop Webmail</b> nécessite une
+        <a href="http://www.rainloop.net/purchase/" target="_blank">souscription</a>.
     TYPE_PREMIUM_LIFETIME: "A vie"
-    TYPE_PREMIUM_HINT: "Ce domaine ne possède pas de licence pour un usage commercial (avec des fonctionnalités supplémentaires)."
     LABEL_SUB_EXPIRES: "La souscription expire"
     BUTTON_ACTIVATE: "Activer une clé de souscription pour ce domaine"
-    BUTTON_PURCHASE: "Achat"
+    BUTTON_PURCHASE: "Acheter"
     BUTTON_TRIAL: "Essai"
   TAB_ABOUT:
     LEGEND_ABOUT: "A propos"
@@ -182,11 +183,17 @@ fr_FR:
     ERROR_INVALID_SUBS_KEY: "Clé de souscription invalide"
     SUBS_KEY_ACTIVATED: "Activation de la clé de souscription réussie"
     HTML_DESC: |
-      Après l'activation, la souscription premium pour <b>%DOMAIN%</b> va être prolongée.
-      <br />
-      Notez que la clé de souscription ne peut être activée que pour un seul domaine.
-      <br /><br />
-      Une fois lancé, le processus d'activation ne peut pas être annulé ou abandonné.
+        Après l'activation, la souscription premium pour <b>%DOMAIN%</b> va être prolongée.
+        <br />
+        Notez que la clé de souscription ne peut être activée que pour un seul domaine.
+        <br /><br />
+        Une fois lancé, le processus d'activation ne peut pas être annulé ou abandonné.
+  POPUPS_DOMAIN_ALIAS:
+    TITLE_ADD_DOMAIN_ALIAS: "Ajouter un alias"
+    LABEL_ALIAS: "Alias"
+    LABEL_DOMAIN: "Domaine"
+    BUTTON_CLOSE: "Fermer"
+    BUTTON_ADD: "Ajouter"
   POPUPS_DOMAIN:
     TITLE_ADD_DOMAIN: "Ajouter un domaine"
     TITLE_ADD_DOMAIN_WITH_NAME: "Ajouter le domaine \"%NAME%\""
@@ -198,7 +205,7 @@ fr_FR:
     LABEL_SIEVE: "SIEVE"
     LABEL_SERVER: "Serveur"
     LABEL_PORT: "Port"
-    LABEL_SECURE: "Sécurisé"
+    LABEL_SECURE: "Sécurité"
     LABEL_WHITE_LIST: "Liste Blanche"
     SECURE_OPTION_NONE: "Aucun"
     SECURE_OPTION_SSL: "SSL/TLS"
@@ -216,9 +223,10 @@ fr_FR:
     BUTTON_CLOSE: "Fermer"
     BUTTON_ADD: "Ajouter"
     BUTTON_UPDATE: "Modifier"
+    NEW_DOMAIN_DESC: "Cette configuration de domaine vous permettra de travailler <br> avec <i>%NAME%</i> dans les adresses électroniques."
     WHITE_LIST_ALERT: |
-      Liste des utilisateurs du domaine auxquels le webmail est autorisé à accéder.
-      Utilisez un espace comme séparateur.
+        Liste des utilisateurs du domaine auxquels le webmail est autorisé à accéder.
+        Utilisez un espace comme séparateur.
   POPUPS_PLUGIN:
     TITLE_PLUGIN: "Plugin"
     DESC_NOTHING_TO_CONFIGURE: "Rien à configurer"
@@ -245,17 +253,17 @@ fr_FR:
     CONNECTION_ERROR: "Serveur injoignable"
     CAPTCHA_ERROR: "CAPTCHA incorrect."
     SOCIAL_FACEBOOK_LOGIN_ACCESS_DISABLE: >
-      Cet ID social n'est pas encore assigné à une adresse email. Connectez-vous en
-      utilisant les informations d'identification du courrier électronique et activez
-      cette fonctionnalité dans les paramètres de votre compte.
+        Cet ID social n'est pas encore assigné à une adresse email. Connectez-vous
+        en utilisant les informations d'identification du courrier électronique et
+        activez cette fonctionnalité dans les paramètres de votre compte.
     SOCIAL_TWITTER_LOGIN_ACCESS_DISABLE: >
-      Cet ID social n'est pas encore assigné à une adresse email. Connectez-vous en
-      utilisant les informations d'identification du courrier électronique et activez
-      cette fonctionnalité dans les paramètres de votre compte.
+        Cet ID social n'est pas encore assigné à une adresse email. Connectez-vous
+        en utilisant les informations d'identification du courrier électronique et
+        activez cette fonctionnalité dans les paramètres de votre compte.
     SOCIAL_GOOGLE_LOGIN_ACCESS_DISABLE: >
-      Cet ID social n'est pas encore assigné à une adresse email. Connectez-vous en
-      utilisant les informations d'identification du courrier électronique et activez
-      cette fonctionnalité dans les paramètres de votre compte.
+        Cet ID social n'est pas encore assigné à une adresse email. Connectez-vous
+        en utilisant les informations d'identification du courrier électronique et
+        activez cette fonctionnalité dans les paramètres de votre compte.
     DOMAIN_NOT_ALLOWED: "Ce domaine n'est pas autorisé"
     ACCOUNT_NOT_ALLOWED: "Ce compte n'est pas autorisé"
     ACCOUNT_TWO_FACTOR_AUTH_REQUIRED: "Double authentification requise"
@@ -273,7 +281,7 @@ fr_FR:
     CANT_SAVE_MESSAGE: "Impossible d'enregistrer le message"
     CANT_SEND_MESSAGE: "Impossible d'envoyer le message"
     INVALID_RECIPIENTS: "Destinataires invalides"
-    CANT_SAVE_FILTERS: "Impossible de sauver les filtres"
+    CANT_SAVE_FILTERS: "Impossible d'enregistrer les filtres"
     CANT_GET_FILTERS: "Impossible d'obtenir les filtres"
     FILTERS_ARE_NOT_CORRECT: "Les filtres ne sont pas corrects"
     CANT_CREATE_FOLDER: "Impossible de créer le dossier"
@@ -287,16 +295,17 @@ fr_FR:
     DOMAIN_ALREADY_EXISTS: "Le domaine existe déjà"
     CANT_INSTALL_PACKAGE: "Impossible d'installer le paquet"
     CANT_DELETE_PACKAGE: "Impossible de supprimer le paquet"
-    INVALID_PLUGIN_PACKAGE: "Ce plug-in est invalide"
-    UNSUPPORTED_PLUGIN_PACKAGE: "Ce plug-in n'est pas supporté"
+    INVALID_PLUGIN_PACKAGE: "Ce plugin est invalide"
+    UNSUPPORTED_PLUGIN_PACKAGE: "Ce plugin n'est pas supporté"
     LICENSING_SERVER_IS_UNAVAILABLE: "Le serveur d'abonnement est inaccessible"
     LICENSING_DOMAIN_EXPIRED: "L'abonnement de ce domaine a expiré."
     LICENSING_DOMAIN_BANNED: "L'abonnement pour ce domaine est interdit."
     DEMO_SEND_MESSAGE_ERROR: "Pour des raisons de sécurité, ce compte de démonstration n'est pas autorisé à envoyer des messages à des adresses e-mail externes !"
     DEMO_ACCOUNT_ERROR: "Pour des raisons de sécurité, ce compte n'est pas autorisé à faire cette action !"
     ACCOUNT_ALREADY_EXISTS: "Ce compte existe déjà"
-    MAIL_SERVER_ERROR: "Une erreur est survenue lors de l'accès au serveur email"
-    INVALID_INPUT_ARGUMENT: "Arguments invalides"
+    ACCOUNT_DOES_NOT_EXIST: "Ce compte n'existe pas"
+    MAIL_SERVER_ERROR: "Une erreur est survenue lors de l'accès au serveur de messagerie"
+    INVALID_INPUT_ARGUMENT: "Argument invalide"
     UNKNOWN_ERROR: "Erreur inconnue"
   STATIC:
     BACK_LINK: "Recharger"
@@ -305,13 +314,13 @@ fr_FR:
     PHP_VERSION_ERROR_DESC: "Votre version de PHP (% VERSION%) est inférieure au minimum requis 5.3.0!"
     NO_SCRIPT_TITLE: "JavaScript est nécessaire pour cette application."
     NO_SCRIPT_DESC: |
-      Le support de JavaScript n'est pas disponible dans votre navigateur.
-      Veuillez activer le support de JavaScript dans les paramètres de votre navigateur et réessayer.
+        Le support de JavaScript n'est pas disponible dans votre navigateur.
+        Veuillez activer le support de JavaScript dans les paramètres de votre navigateur et réessayer.
     NO_COOKIE_TITLE: "Le support des cookies est nécessaire pour cette application."
     NO_COOKIE_DESC: |
-      Le support des cookies n'est pas disponible dans votre navigateur.
-      Veuillez activer le support des cookies dans les paramètres de votre navigateur et réessayer.
+        Le support des cookies n'est pas disponible dans votre navigateur.
+        Veuillez activer le support des cookies dans les paramètres de votre navigateur et réessayer.
     BAD_BROWSER_TITLE: "Votre navigateur n'est pas à jour."
     BAD_BROWSER_DESC: |
-      Pour utiliser l'ensemble des fonctionnalités de l'application,
-      téléchargez et installez l'un de ces navigateurs
+        Pour utiliser toutes les fonctionnalités de l'application,
+        téléchargez et installez l'un de ces navigateurs :
